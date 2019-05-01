@@ -6,6 +6,17 @@
   </head>
   <body>
     <script>
+      function computerPlay() {
+        const selection = Math.random() * 3;
+        switch(Math.floor(selection)) {
+          case 0:
+            return 'Rock';
+          case 1:
+            return 'Paper';
+          case 2:
+            return 'Scissors';
+        }
+      }
     </script>
   </body>
 </html>
