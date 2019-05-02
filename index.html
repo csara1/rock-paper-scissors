@@ -34,6 +34,10 @@
         for (let i=0; i<5; i++) {
           do {
             playerSelection = prompt('Select "Rock", "Paper", or "Scissors"');
+            if (typeof playerSelection != 'string') {
+              console.log("Game cancelled!");
+              return;
+            }
             playerSelection = playerSelection.charAt(0).toUpperCase()
                             + playerSelection.substring(1).toLowerCase();
           } while (playerSelection != 'Rock' && playerSelection != 'Paper' && playerSelection != 'Scissors');
