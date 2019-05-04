@@ -10,40 +10,43 @@ function computerPlay() {
     }
 }
 
-function playRound(playerSelection, computerSelection) {
-    if (playerSelection == computerSelection) {
-        return "You Draw!"
-    }
-    return (playerSelection == 'Rock' && computerSelection == 'Paper' ||
-            playerSelection == 'Paper' && computerSelection == 'Scissors' ||
-            playerSelection == 'Scissors' && computerSelection == 'Rock') ?
-            "You Lose! " + computerSelection + " beats " + playerSelection :
-            "You Win! " + playerSelection + " beats " + computerSelection;
+function announceWinner() {
+    buttons.forEach(button => button.hidden = true);
+    document.querySelector('h1').innerText = (computerWins == 5
+                                              ? "The computer is"
+                                              : "You are"
+                                             ) + " the winner";
 }
 
-function game() {
-    let computerWins = 0,
-        playerWins = 0,
-        playerSelection;
-    for (let i=0; i<5; i++) {
-        do {
-        playerSelection = prompt('Select "Rock", "Paper", or "Scissors"');
-        if (typeof playerSelection != 'string') {
-            console.log("Game cancelled!");
-            return;
-        }
-        playerSelection = playerSelection.charAt(0).toUpperCase()
-                        + playerSelection.substring(1).toLowerCase();
-        } while (playerSelection != 'Rock' && playerSelection != 'Paper' && playerSelection != 'Scissors');
-        let roundResult = playRound(playerSelection, computerPlay());
-        console.log(roundResult);
-        if (roundResult.indexOf("Lose") == 4) {
-           computerWins++;
-        } else if (roundResult.indexOf("Win") == 4) {
-            playerWins++;
-        } 
+function playRound(e) {
+    const playerSelection = e.srcElement.innerText,
+          computerSelection = computerPlay(),
+          results = document.querySelector('#results'),
+          paragraph = document.createElement('p');
+
+    if (playerSelection == computerSelection) {
+        paragraph.innerText = "You Draw! Both selected " + playerSelection;
+        paragraph.classList.add('draw');
+    } else if (playerSelection == 'Rock' && computerSelection == 'Paper' ||
+               playerSelection == 'Paper' && computerSelection == 'Scissors' ||
+               playerSelection == 'Scissors' && computerSelection == 'Rock') {
+        paragraph.innerText = "You Lose! " + computerSelection + " beats " + playerSelection;
+        paragraph.classList.add('lose');
+        document.querySelector('#computer').innerText = ++computerWins;
+    } else {
+        paragraph.innerText = "You Win! " + playerSelection + " beats " + computerSelection;
+        paragraph.classList.add('win');
+        document.querySelector('#you').innerText = ++playerWins;
     }
-    console.log(computerWins > playerWins ? "The computer is the winner!" :
-                playerWins > computerWins ? "You are the winner!" :
-                                            "You and the computer drew!");
+
+    results.appendChild(paragraph);
+
+    if (computerWins == 5 || playerWins == 5) {
+        announceWinner();
+    }
 }
+
+const buttons = Array.from(document.querySelectorAll('button'));
+buttons.forEach(button => button.addEventListener('click', playRound));
+let computerWins = 0,
+    playerWins = 0;

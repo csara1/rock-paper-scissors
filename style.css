@@ -1,0 +1,15 @@
+body {
+    text-align: center
+}
+
+.draw {
+    color: orange;
+}
+
+.lose {
+    color: red;
+}
+
+.win {
+    color: green;
+}
