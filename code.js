@@ -14,7 +14,9 @@ function playRound(e) {
     const playerSelection = e.srcElement.innerText,
           computerSelection = computerPlay(),
           results = document.querySelector('#results'),
-          paragraph = document.createElement('p');
+          paragraph = document.createElement('p'),
+          computerScore = document.querySelector('#computer'),
+          playerScore = document.querySelector('#you');
 
     if (playerSelection == computerSelection) {
         paragraph.innerText = "You Draw!";
@@ -22,18 +24,16 @@ function playRound(e) {
                playerSelection == 'Paper' && computerSelection == 'Scissors' ||
                playerSelection == 'Scissors' && computerSelection == 'Rock') {
         paragraph.innerText = "You Lose! " + computerSelection + " beats " + playerSelection;
+        computerScore.innerText = ++computerWins;
     } else {
         paragraph.innerText = "You Win! " + playerSelection + " beats " + computerSelection;
+        playerScore.innerText = ++playerWins;
     }
 
     results.appendChild(paragraph);
 }
 
 function game() {
-    let computerWins = 0,
-        playerWins = 0,
-        playerSelection;
-
     console.log(computerWins > playerWins ? "The computer is the winner!" :
             playerWins > computerWins ? "You are the winner!" :
                                         "You and the computer drew!");
@@ -41,3 +41,5 @@ function game() {
 
 const buttons = Array.from(document.querySelectorAll('button'));
 buttons.forEach(button => button.addEventListener('click', playRound));
+let computerWins = 0,
+    playerWins = 0;
