@@ -12,16 +12,21 @@ function computerPlay() {
 
 function playRound(e) {
     const playerSelection = e.srcElement.innerText,
-          computerSelection = computerPlay();
+          computerSelection = computerPlay(),
+          results = document.querySelector('#results'),
+          paragraph = document.createElement('p');
+
     if (playerSelection == computerSelection) {
-        console.log("You Draw!");
+        paragraph.innerText = "You Draw!";
     } else if (playerSelection == 'Rock' && computerSelection == 'Paper' ||
                playerSelection == 'Paper' && computerSelection == 'Scissors' ||
                playerSelection == 'Scissors' && computerSelection == 'Rock') {
-        console.log("You Lose! " + computerSelection + " beats " + playerSelection);
+        paragraph.innerText = "You Lose! " + computerSelection + " beats " + playerSelection;
     } else {
-        console.log("You Win! " + playerSelection + " beats " + computerSelection);
+        paragraph.innerText = "You Win! " + playerSelection + " beats " + computerSelection;
     }
+
+    results.appendChild(paragraph);
 }
 
 function game() {
