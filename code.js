@@ -26,13 +26,16 @@ function playRound(e) {
 
     if (playerSelection == computerSelection) {
         paragraph.innerText = "You Draw! Both selected " + playerSelection;
+        paragraph.classList.add('draw');
     } else if (playerSelection == 'Rock' && computerSelection == 'Paper' ||
                playerSelection == 'Paper' && computerSelection == 'Scissors' ||
                playerSelection == 'Scissors' && computerSelection == 'Rock') {
         paragraph.innerText = "You Lose! " + computerSelection + " beats " + playerSelection;
+        paragraph.classList.add('lose');
         document.querySelector('#computer').innerText = ++computerWins;
     } else {
         paragraph.innerText = "You Win! " + playerSelection + " beats " + computerSelection;
+        paragraph.classList.add('win');
         document.querySelector('#you').innerText = ++playerWins;
     }
 
