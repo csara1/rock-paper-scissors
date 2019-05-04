@@ -10,15 +10,18 @@ function computerPlay() {
     }
 }
 
-function playRound(playerSelection, computerSelection) {
+function playRound(e) {
+    const playerSelection = e.srcElement.innerText,
+          computerSelection = computerPlay();
     if (playerSelection == computerSelection) {
-        return "You Draw!"
+        console.log("You Draw!");
+    } else if (playerSelection == 'Rock' && computerSelection == 'Paper' ||
+               playerSelection == 'Paper' && computerSelection == 'Scissors' ||
+               playerSelection == 'Scissors' && computerSelection == 'Rock') {
+        console.log("You Lose! " + computerSelection + " beats " + playerSelection);
+    } else {
+        console.log("You Win! " + playerSelection + " beats " + computerSelection);
     }
-    return (playerSelection == 'Rock' && computerSelection == 'Paper' ||
-            playerSelection == 'Paper' && computerSelection == 'Scissors' ||
-            playerSelection == 'Scissors' && computerSelection == 'Rock') ?
-            "You Lose! " + computerSelection + " beats " + playerSelection :
-            "You Win! " + playerSelection + " beats " + computerSelection;
 }
 
 function game() {
@@ -30,3 +33,6 @@ function game() {
             playerWins > computerWins ? "You are the winner!" :
                                         "You and the computer drew!");
 }
+
+const buttons = Array.from(document.querySelectorAll('button'));
+buttons.forEach(button => button.addEventListener('click', playRound));
