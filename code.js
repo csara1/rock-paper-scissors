@@ -10,33 +10,37 @@ function computerPlay() {
     }
 }
 
+function announceWinner() {
+    buttons.forEach(button => button.hidden = true);
+    document.querySelector('h1').innerText = (computerWins == 5
+                                              ? "The computer is"
+                                              : "You are"
+                                             ) + " the winner";
+}
+
 function playRound(e) {
     const playerSelection = e.srcElement.innerText,
           computerSelection = computerPlay(),
           results = document.querySelector('#results'),
-          paragraph = document.createElement('p'),
-          computerScore = document.querySelector('#computer'),
-          playerScore = document.querySelector('#you');
+          paragraph = document.createElement('p');
 
     if (playerSelection == computerSelection) {
-        paragraph.innerText = "You Draw!";
+        paragraph.innerText = "You Draw! Both selected " + playerSelection;
     } else if (playerSelection == 'Rock' && computerSelection == 'Paper' ||
                playerSelection == 'Paper' && computerSelection == 'Scissors' ||
                playerSelection == 'Scissors' && computerSelection == 'Rock') {
         paragraph.innerText = "You Lose! " + computerSelection + " beats " + playerSelection;
-        computerScore.innerText = ++computerWins;
+        document.querySelector('#computer').innerText = ++computerWins;
     } else {
         paragraph.innerText = "You Win! " + playerSelection + " beats " + computerSelection;
-        playerScore.innerText = ++playerWins;
+        document.querySelector('#you').innerText = ++playerWins;
     }
 
     results.appendChild(paragraph);
-}
 
-function game() {
-    console.log(computerWins > playerWins ? "The computer is the winner!" :
-            playerWins > computerWins ? "You are the winner!" :
-                                        "You and the computer drew!");
+    if (computerWins == 5 || playerWins == 5) {
+        announceWinner();
+    }
 }
 
 const buttons = Array.from(document.querySelectorAll('button'));
